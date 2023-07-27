@@ -1,0 +1,158 @@
+grumphp:
+  fixer:
+    enabled: false
+    fix_by_default: false
+  testsuites:
+    git_commit_msg:
+      tasks:
+        - git_commit_message
+    git_pre_commit:
+      tasks:
+        - composer
+        - phplint
+        - file_size
+        - phpcs
+        - psalm
+        - git_blacklist
+        - rector
+        - composer_normalize
+        - pest
+        - composer_require_checker
+        - clover_coverage
+        - infection
+        - jsonlint
+        - xmllint
+        - yamllint
+        - deptrac
+  tasks:
+    git_commit_message:
+      allow_empty_message: false
+      enforce_capitalized_subject: false
+      enforce_no_subject_punctuations: false
+      enforce_no_subject_trailing_period: true
+      enforce_single_lined_subject: true
+      type_scope_conventions:
+        types:
+          - build
+          - chore
+          - ci
+          - chore
+          - docs
+          - feat
+          - fix
+          - perf
+          - refactor
+          - revert
+          - style
+          - test
+        scopes: [ ]
+      max_body_width: 72
+      max_subject_width: 60
+      matchers: [ ]
+      case_insensitive: true
+      multiline: true
+      additional_modifiers: ''
+    xmllint:
+      ignore_patterns: [ ]
+      load_from_net: false
+      x_include: false
+      dtd_validation: false
+      scheme_validation: false
+      triggered_by: [ 'xml' ]
+    yamllint:
+      whitelist_patterns: [ ]
+      ignore_patterns: [ ]
+      object_support: false
+      exception_on_invalid_type: false
+      parse_constant: false
+      parse_custom_tags: false
+    rector:
+      config: 'rector.php'
+      triggered_by: [ 'php' ]
+      ignore_patterns:
+        - var/
+        - tests/
+      clear_cache: false
+      no_diffs: false
+    deptrac:
+      cache_file: 'var/.cache/deptrac/.deptrac.cache'
+      depfile: ~
+      formatter: ~
+      output: ~
+    clover_coverage:
+      clover_file: 'var/.report/coverage/clover.xml'
+      level: 50
+    pest:
+      config_file: ~
+      testsuite: ~
+      group: [ ]
+      always_execute: false
+    jsonlint:
+      ignore_patterns: [ ]
+      detect_key_conflicts: false
+    composer_require_checker:
+      composer_file: 'composer.json'
+      config_file: ~
+      ignore_parse_errors: false
+      triggered_by: [ 'composer.json', 'composer.lock', '*.php' ]
+    infection:
+      threads: 4
+      test_framework: pest
+      only_covered: false
+      show_mutations: true
+      verbose: false
+      configuration: 'infection.json'
+      min_msi: 70
+      min_covered_msi: 50
+      mutators: [ ]
+      ignore_patterns:
+        - var/
+      triggered_by: [ php ]
+    composer:
+      file: ./composer.json
+      no_check_all: false
+      no_check_lock: false
+      no_check_publish: false
+      no_local_repository: false
+      with_dependencies: false
+      strict: false
+    composer_normalize:
+      indent_size: ~
+      indent_style: ~
+      no_check_lock: false
+      no_update_lock: true
+      verbose: false
+    file_size:
+      max_size: 12M
+      ignore_patterns: [ ]
+    git_blacklist:
+      keywords:
+        - "var_dump("
+        - "print_r("
+        - "debug("
+        - "dump("
+      whitelist_patterns: [ ]
+      triggered_by: [ 'php' ]
+      regexp_type: G
+    phplint:
+      exclude: [ 'app' ]
+      jobs: ~
+      short_open_tag: false
+      ignore_patterns:
+        - var/
+      triggered_by: [ 'php' ]
+    phpcs:
+      standard: [ 'phpcs.xml' ]
+      ignore_patterns:
+        - var/
+    psalm:
+      config: psalm.xml
+      ignore_patterns:
+        - var/
+        - tests/
+      no_cache: false
+      report: ~
+      output_format: null
+      threads: 1
+      triggered_by: [ 'php' ]
+      show_info: false
