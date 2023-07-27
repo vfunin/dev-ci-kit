@@ -7,6 +7,7 @@ namespace DevCIKit\Tests\Unit\Composer;
 use Composer\Composer;
 use Composer\Config;
 use Composer\IO\IOInterface;
+use Composer\Script\Event;
 use DevCIKit\Composer\DevCIKitPlugin;
 use GrumPHP\Util\Filesystem;
 use Mockery;
@@ -16,17 +17,20 @@ test('The configuration files exist.', function () {
     $config = Mockery::mock(Config::class);
     $io = Mockery::mock(IOInterface::class);
     $fileSystem = Mockery::mock(Filesystem::class);
+    $event = Mockery::mock(Event::class);
 
     $packageDir = rtrim(dirname(__DIR__, 3), '/');
 
+    $event->shouldReceive('getComposer')->andReturns($composer);
+    $event->shouldReceive('getIO')->andReturns($io);
     $composer->shouldReceive('getConfig')->andReturns($config);
     $io->shouldReceive('write')->andReturns();
     $config->shouldReceive('get')->with('vendor-dir')->andReturns($packageDir);
     $fileSystem->shouldReceive('copy')->andReturns();
     $fileSystem->shouldReceive('ensureValidSlashes')->andReturns('');
 
-    $integrationObject = new DevCIKitPlugin($composer, $io);
-    $integrationObject->copyFiles($fileSystem);
+    $integrationObject = new DevCIKitPlugin();
+    $integrationObject->copyFiles($event, $fileSystem);
 
     $fileNames = [
         'grumphp.yml',

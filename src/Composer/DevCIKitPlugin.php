@@ -8,6 +8,7 @@ use Composer\Composer;
 use Composer\EventDispatcher\EventSubscriberInterface;
 use Composer\IO\IOInterface;
 use Composer\Plugin\PluginInterface;
+use Composer\Script\Event;
 use Composer\Script\ScriptEvents;
 use GrumPHP\Util\Filesystem;
 
@@ -16,14 +17,8 @@ use GrumPHP\Util\Filesystem;
  */
 class DevCIKitPlugin implements PluginInterface, EventSubscriberInterface
 {
-    public function __construct(private ?Composer $composer = null, private ?IOInterface $io = null)
-    {
-    }
-
     public function activate(Composer $composer, IOInterface $io): void
     {
-        $this->composer = $composer;
-        $this->io = $io;
     }
 
     public static function getSubscribedEvents(): array
@@ -34,12 +29,12 @@ class DevCIKitPlugin implements PluginInterface, EventSubscriberInterface
         ];
     }
 
-    public function copyFiles(?Filesystem $filesystem = null): void
+    public function copyFiles(Event $event, ?Filesystem $filesystem = null): void
     {
         $filesystem ??= new Filesystem();
 
         $projectDir = $filesystem->ensureValidSlashes(
-            dirname((string) $this->composer?->getConfig()->get('vendor-dir'))
+            dirname((string) $event->getComposer()->getConfig()->get('vendor-dir'))
         );
         $packageDir = $filesystem->ensureValidSlashes(dirname(__DIR__, 2));
 
@@ -68,10 +63,10 @@ class DevCIKitPlugin implements PluginInterface, EventSubscriberInterface
             );
         }
 
-        $this->io?->write(
+        $event->getIO()->write(
             '<fg=green>Dev CI Kit configuration files have been successfully copied.</fg=green>'
         );
-        $this->io?->write(
+        $event->getIO()->write(
             '<fg=yellow>Please rename the configuration files by removing the .dist extension.</fg=yellow>'
         );
     }
