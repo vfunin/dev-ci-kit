@@ -33,9 +33,9 @@ class DevCIKitPlugin implements PluginInterface, EventSubscriberInterface
     /**
      * @psalm-suppress PossiblyUnusedMethod
      */
-    public static function init(Event $event): void
+    public static function init(Event $event, ?Filesystem $filesystem = null): void
     {
-        (new self())->copyFiles($event);
+        (new self())->copyFiles($event, $filesystem);
     }
 
     public function copyFiles(Event $event, ?Filesystem $filesystem = null): void

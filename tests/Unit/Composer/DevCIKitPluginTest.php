@@ -12,27 +12,16 @@ use DevCIKit\Composer\DevCIKitPlugin;
 use GrumPHP\Util\Filesystem;
 use Mockery;
 
-test('The configuration files exist.', function () {
-    $composer = Mockery::mock(Composer::class);
+beforeEach(function () {
+    $this->composer = Mockery::mock(Composer::class);
     $config = Mockery::mock(Config::class);
-    $io = Mockery::mock(IOInterface::class);
-    $fileSystem = Mockery::mock(Filesystem::class);
-    $event = Mockery::mock(Event::class);
+    $this->io = Mockery::mock(IOInterface::class);
+    $this->fileSystem = Mockery::mock(Filesystem::class);
+    $this->event = Mockery::mock(Event::class);
 
-    $packageDir = rtrim(dirname(__DIR__, 3), '/');
+    $this->packageDir = rtrim(dirname(__DIR__, 3), '/');
 
-    $event->shouldReceive('getComposer')->andReturns($composer);
-    $event->shouldReceive('getIO')->andReturns($io);
-    $composer->shouldReceive('getConfig')->andReturns($config);
-    $io->shouldReceive('write')->andReturns();
-    $config->shouldReceive('get')->with('vendor-dir')->andReturns($packageDir);
-    $fileSystem->shouldReceive('copy')->andReturns();
-    $fileSystem->shouldReceive('ensureValidSlashes')->andReturns('');
-
-    $integrationObject = new DevCIKitPlugin();
-    $integrationObject->copyFiles($event, $fileSystem);
-
-    $fileNames = [
+    $this->fileNames = [
         'grumphp.yml',
         'infection.json',
         'phpcs.xml',
@@ -50,8 +39,38 @@ test('The configuration files exist.', function () {
         'var/.report/.gitignore',
     ];
 
+    $this->event->shouldReceive('getComposer')->andReturns($this->composer);
+    $this->event->shouldReceive('getIO')->andReturns($this->io);
+    $this->composer->shouldReceive('getConfig')->andReturns($config);
+    $this->io->shouldReceive('write')->andReturns();
+    $config->shouldReceive('get')->with('vendor-dir')->andReturns($this->packageDir);
+    $this->fileSystem->shouldReceive('copy')->andReturns();
+    $this->fileSystem->shouldReceive('ensureValidSlashes')->andReturns('');
+});
 
-    foreach ($fileNames as $fileName) {
-        expect(file_exists($packageDir . '/' . $fileName))->toBeTrue();
+test('The configuration files exist.', function () {
+    $integrationObject = new DevCIKitPlugin();
+    $integrationObject->copyFiles($this->event, $this->fileSystem);
+
+    foreach ($this->fileNames as $fileName) {
+        expect(file_exists($this->packageDir . '/' . $fileName))->toBeTrue();
     }
+});
+
+test('Get subscribed event', function () {
+    expect(DevCIKitPlugin::getSubscribedEvents())->toMatchArray([
+        'post-install-cmd' => 'copyFiles',
+        'post-update-cmd' => 'copyFiles',
+    ]);
+});
+
+test('Init', function () {
+    (new DevCIKitPlugin())::init($this->event, $this->fileSystem);
+    foreach ($this->fileNames as $fileName) {
+        expect(file_exists($this->packageDir . '/' . $fileName))->toBeTrue();
+    }
+});
+
+test('That plugin implements', function () {
+    expect((new DevCIKitPlugin()))->toHaveMethods(['activate', 'deactivate', 'uninstall']);
 });
