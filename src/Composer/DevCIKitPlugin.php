@@ -18,6 +18,9 @@ use GrumPHP\Util\Filesystem;
  */
 class DevCIKitPlugin implements PluginInterface, EventSubscriberInterface
 {
+    /**
+     * @psalm-suppress UnusedProperty
+     */
     public function activate(Composer $composer, IOInterface $io): void
     {
     }
@@ -38,6 +41,9 @@ class DevCIKitPlugin implements PluginInterface, EventSubscriberInterface
         (new self())->copyFiles($event, $filesystem);
     }
 
+    /**
+     * @psalm-suppress PossiblyUnusedParam
+     */
     public function copyFiles(Event $event, ?Filesystem $filesystem = null): void
     {
         $filesystem ??= new Filesystem();
@@ -79,10 +85,16 @@ class DevCIKitPlugin implements PluginInterface, EventSubscriberInterface
         );
     }
 
+    /**
+     * @psalm-suppress UnusedProperty
+     */
     public function deactivate(Composer $composer, IOInterface $io)
     {
     }
 
+    /**
+     * @psalm-suppress UnusedProperty
+     */
     public function uninstall(Composer $composer, IOInterface $io)
     {
     }
