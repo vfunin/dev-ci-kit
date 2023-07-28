@@ -54,5 +54,10 @@
     },
     "extra": {
         "class": "DevCIKit\\Composer\\DevCIKitPlugin"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "DevCIKit\\Composer\\DevCIKitPlugin::init"
+        ]
     }
 }

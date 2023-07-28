@@ -6,6 +6,7 @@ namespace DevCIKit\Composer;
 
 use Composer\Composer;
 use Composer\EventDispatcher\EventSubscriberInterface;
+use Composer\Factory;
 use Composer\IO\IOInterface;
 use Composer\Plugin\PluginInterface;
 use Composer\Script\Event;
@@ -29,13 +30,20 @@ class DevCIKitPlugin implements PluginInterface, EventSubscriberInterface
         ];
     }
 
+    /**
+     * @psalm-suppress PossiblyUnusedMethod
+     */
+    public static function init(Event $event): void
+    {
+        (new self())->copyFiles($event);
+    }
+
     public function copyFiles(Event $event, ?Filesystem $filesystem = null): void
     {
         $filesystem ??= new Filesystem();
 
-        $projectDir = $filesystem->ensureValidSlashes(
-            dirname((string) $event->getComposer()->getConfig()->get('vendor-dir'))
-        );
+        $projectDir = dirname(Factory::getComposerFile());
+
         $packageDir = $filesystem->ensureValidSlashes(dirname(__DIR__, 2));
 
         $fileNames = [

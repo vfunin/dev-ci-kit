@@ -1,0 +1,39 @@
+name: Mutation Testing
+
+on:
+  push:
+    branches: [ "master", "main" ]
+  pull_request:
+
+env:
+  MIN_MSI: 70.17
+  MIN_COVERED_MSI: 86.48
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    name: Infection complete run
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+          tools: composer:v2
+          coverage: xdebug
+
+      - name: Install Dependencies
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader
+
+      - name: Validate composer.json and composer.lock
+        run: composer validate --strict
+
+      - name: Collect coverage report
+        run: ./vendor/bin/pest --coverage-xml=var/.report/coverage/xml --log-junit=var/.report/coverage/phpunit.junit.xml
+
+      - name: Run Infection
+        env:
+          STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
+        run: ./vendor/bin/infection --threads=max --skip-initial-tests --min-msi=$MIN_MSI --min-covered-msi=$MIN_COVERED_MSI --coverage=var/.report/coverage --log-verbosity=none --no-interaction --no-progress

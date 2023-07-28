@@ -8,6 +8,19 @@ infection:
 test:
 	docker compose run --rm application vendor/bin/pest --coverage
 
+test-cov:
+	docker compose run --rm application vendor/bin/pest --coverage-xml=var/.report/coverage/xml --log-junit=var/.report/coverage/phpunit.junit.xml
+
+mut:
+	docker compose run --rm application vendor/bin/infection --threads=max \
+              --skip-initial-tests \
+              --min-msi=90 \
+              --min-covered-msi=90 \
+              --coverage=var/.report/coverage \
+              --log-verbosity=none \
+              --no-interaction \
+              --no-progress
+
 deptrac:
 	docker compose run --rm application vendor/bin/deptrac analyse --cache-file='var/.cache/deptrac/.deptrac.cache'
 
