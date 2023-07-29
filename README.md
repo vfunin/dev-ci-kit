@@ -1,3 +1,5 @@
+[![Total Downloads](https://poser.pugx.org/vfunin/dev-ci-kit/downloads.png)](https://packagist.org/packages/vfunin/dev-ci-kit)
+[![Build status](https://github.com/vfunin/dev-ci-kit/workflows/build/badge.svg)](https://github.com/vfunin/dev-ci-kit/actions?query=workflow%3Abuild)
 [![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fvfunin%2Fdev-ci-kit%2Fmaster)](https://dashboard.stryker-mutator.io/reports/github.com/vfunin/dev-ci-kit/master)
 [![codecov](https://codecov.io/gh/vfunin/dev-ci-kit/branch/master/graph/badge.svg?token=ER6NMU4XDO)](https://codecov.io/gh/vfunin/dev-ci-kit)
 [![psalm-level](https://shepherd.dev/github/vfunin/dev-ci-kit/level.svg)](https://shepherd.dev/github/vfunin/dev-ci-kit)
