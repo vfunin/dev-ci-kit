@@ -20,7 +20,7 @@ The package provides a pre-configured set of code quality checking tools based o
 ## Installation
 Install Dev CI Kit with dependencies:
 ```sh
-composer require --dev vfunin/dev-ci-kit
+composer require --dev vfunin/dev-ci-kit --update-with-all-dependencies
 ```
 After installation, configuration file templates will be copied to your project's root directory with a .dist extension. If your project does not already have the corresponding file, simply remove the extension, or use your own configuration.
 

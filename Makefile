@@ -1,37 +1,30 @@
-.PHONY: ci infection test deptrac rector cs psalm gst gcmsg
+.PHONY: ci infection test deptrac test-coverage mutation rector cs psalm gst gcmsg
 ci:
-	docker compose run --rm application vendor/bin/grumphp run
+	docker compose run --rm application composer dck-ci
 
 infection:
-	docker compose run --rm application vendor/bin/infection --test-framework=pest
+	docker compose run --rm application composer dck-infection
 
 test:
-	docker compose run --rm application vendor/bin/pest --coverage
+	docker compose run --rm application composer dck-pest
 
-test-cov:
-	docker compose run --rm application vendor/bin/pest --coverage-xml=var/.report/coverage/xml --log-junit=var/.report/coverage/phpunit.junit.xml
+test-coverage:
+	docker compose run --rm application composer dck-pest-coverage
 
-mut:
-	docker compose run --rm application vendor/bin/infection --threads=max \
-              --skip-initial-tests \
-              --min-msi=90 \
-              --min-covered-msi=90 \
-              --coverage=var/.report/coverage \
-              --log-verbosity=none \
-              --no-interaction \
-              --no-progress
+mutation:
+	docker compose run --rm application composer dck-mutation-test
 
 deptrac:
-	docker compose run --rm application vendor/bin/deptrac analyse --cache-file='var/.cache/deptrac/.deptrac.cache'
+	docker compose run --rm application composer dck-deptrac
 
 rector:
-	docker compose run --rm application vendor/bin/rector process --dry-run
+	docker compose run --rm application composer dck-rector
 
 cs:
-	docker compose run --rm application vendor/bin/phpcs
+	docker compose run --rm application composer dck-phpcs
 
 psalm:
-	docker compose run --rm application vendor/bin/psalm
+	docker compose run --rm application composer dck-psalm
 
 gst:
 	docker compose run --rm application git status
