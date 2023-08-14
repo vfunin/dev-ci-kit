@@ -61,6 +61,7 @@ class DevCIKitPlugin implements PluginInterface, EventSubscriberInterface
             'rector.php',
             'deptrac.yaml',
             '.editorconfig',
+            'phpstan.neon',
             'var/.cache/deptrac/.gitignore',
             'var/.cache/infection/.gitignore',
             'var/.cache/phpcs/.gitignore',

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8561f26769eb46cd2724bbbc7c93c462",
+    "content-hash": "c66b2837abc6be0d6a2e6eef42bc8778",
     "packages": [
         {
             "name": "amphp/amp",
@@ -6678,16 +6678,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.10.26",
+            "version": "1.11.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "5d660cbb7e1b89253a47147ae44044f49832351f"
+                "reference": "aae8edf7760da6aa88dba6bad8fc5548f3dc78e1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/5d660cbb7e1b89253a47147ae44044f49832351f",
-                "reference": "5d660cbb7e1b89253a47147ae44044f49832351f",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/aae8edf7760da6aa88dba6bad8fc5548f3dc78e1",
+                "reference": "aae8edf7760da6aa88dba6bad8fc5548f3dc78e1",
                 "shasum": ""
             },
             "require": {
@@ -6696,6 +6696,7 @@
             "conflict": {
                 "phpstan/phpstan-shim": "*"
             },
+            "default-branch": true,
             "bin": [
                 "phpstan",
                 "phpstan.phar"
@@ -6736,7 +6737,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-07-19T12:44:37+00:00"
+            "time": "2023-08-13T16:24:33+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",

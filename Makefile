@@ -26,6 +26,9 @@ cs:
 psalm:
 	docker compose run --rm application composer dck-psalm
 
+phpstan:
+	docker compose run --rm application composer dck-phpstan
+
 gst:
 	docker compose run --rm application git status
 
