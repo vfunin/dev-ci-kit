@@ -27,6 +27,7 @@ beforeEach(function () {
         'phpcs.xml',
         'phpunit.xml',
         'psalm.xml',
+        'phpstan.neon',
         'rector.php',
         'deptrac.yaml',
         '.editorconfig',

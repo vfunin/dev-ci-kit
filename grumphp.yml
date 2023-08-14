@@ -12,6 +12,7 @@ grumphp:
         - phplint
         - file_size
         - phpcs
+        - phpstan
         - psalm
         - git_blacklist
         - rector
@@ -145,6 +146,9 @@ grumphp:
       standard: [ 'phpcs.xml' ]
       ignore_patterns:
         - var/
+    phpstan:
+      ignore_patterns:
+        - tests/
     psalm:
       config: psalm.xml
       ignore_patterns:

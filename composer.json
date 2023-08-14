@@ -19,6 +19,7 @@
         "pestphp/pest": "^2.8",
         "php-parallel-lint/php-parallel-lint": "^1.3",
         "phpro/grumphp": "^1.16",
+        "phpstan/phpstan": "^1.11",
         "phpunit/phpunit": "^10.2",
         "psalm/plugin-laravel": "^2.8",
         "psalm/plugin-mockery": "^1.1",
@@ -66,6 +67,7 @@
         "dck-pest": "vendor/bin/pest --coverage",
         "dck-pest-coverage": "vendor/bin/pest --coverage-xml=var/.report/coverage/xml --log-junit=var/.report/coverage/phpunit.junit.xml",
         "dck-phpcs": "vendor/bin/phpcs",
+        "dck-phpstan": "vendor/bin/phpstan",
         "dck-psalm": "vendor/bin/psalm",
         "dck-rector": "vendor/bin/rector process --dry-run"
     }
